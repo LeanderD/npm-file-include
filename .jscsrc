@@ -1,0 +1,74 @@
+{
+    "disallowAnonymousFunctions"                : true,
+    "disallowCommaBeforeLineBreak"              : true,
+    "disallowFunctionDeclarations"              : true,
+    "disallowKeywordsOnNewLine"                 : ["else"],
+    "disallowMixedSpacesAndTabs"                : true,
+    "disallowMultipleVarDecl"                   : true,
+    "disallowNewlineBeforeBlockStatements"      : true,
+    "disallowOperatorBeforeLineBreak"           : ["+", "."],
+    "disallowQuotedKeysInObjects"               : true,
+    "disallowSpaceAfterKeywords"                : [
+        "if",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "catch"
+    ],
+    "disallowSpaceAfterPrefixUnaryOperators"    : ["++", "--", "+", "-", "~", "!"],
+    "disallowSpaceBeforePostfixUnaryOperators"  : ["++", "--"],
+    "disallowSpacesInCallExpression"            : true,
+    "disallowSpacesInFunctionDeclaration"       : {
+        "beforeOpeningRoundBrace"   : true
+    },
+    "disallowTrailingComma"                     : true,
+    "disallowYodaConditions"                    : true,
+
+
+    "requireSpaceAfterLineComment"              : true,
+    "requireSpaceBeforeBlockStatements"         : true,
+    "requireSpaceBeforeKeywords"                : true,
+    "requireSpaceBeforeObjectValues"            : true,
+    "requireSpaceBetweenArguments"              : true,
+    "requireSpacesInConditionalExpression"      : {
+        "afterTest"                 : true,
+        "beforeConsequent"          : true,
+        "afterConsequent"           : true,
+        "beforeAlternate"           : true
+    },
+    "requireSpacesInFunctionDeclaration"        : {
+        "beforeOpeningCurlyBrace"   : true
+    },
+    "requireSpacesInsideParentheses"            : {
+        "all"                       : true,
+        "except"                    : [ "{", "}" ]
+    },
+    "requireCamelCaseOrUpperCaseIdentifiers"    : true,
+    "requireDotNotation"                        : true,
+    "requirePaddingNewLinesBeforeLineComments"  : true,
+    "requirePaddingNewLinesAfterUseStrict"      : true,
+    "requirePaddingNewLinesAfterBlocks"         : true,
+    "requirePaddingNewlinesBeforeKeywords"      : [
+        "do",
+        "for",
+        "if",
+        "switch",
+        "case",
+        "try",
+        "while",
+        "with",
+        "return",
+        "typeof",
+        "function"
+    ],
+
+    "maximumLineLength"                         : 120,
+    "requireAlignedObjectValues"                : "ignoreFunction",
+    "validateQuoteMarks"                        : { "mark": "'", "escape": true },
+    "validateParameterSeparator"                : ", ",
+    "validateNewlineAfterArrayElements"         : {
+        "maximum"                   : 5
+    },
+    "validateIndentation"                       : 4
+}
