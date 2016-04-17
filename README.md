@@ -1,5 +1,5 @@
 #File Include
-[![NPM Version](https://badge.fury.io/js/fluture.svg)](https://www.npmjs.com/package/fluture)
+
 [![Dependencies](https://david-dm.org/leanderd/npm-file-include.svg)](https://david-dm.org/leanderd/npm-file-include)
 
 It is usable, but this is just a quick, first version
