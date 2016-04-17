@@ -21,14 +21,14 @@
     "fileinclude": "./src/npmFileInclude.js"
   },
   "preferGlobal" : true,
-  "author": "Leander Dirkse <leander@void-zero.nl>",
+  "author": "Leander Dirkse <leander.dirkse@gmail.com>",
   "license": "MIT",
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/LeanderD/npm-file-include"
+    "url" : "https://github.com/leanderd/npm-file-include"
   },
   "bugs" : {
-    "url" : "https://github.com/LeanderD/npm-file-include/issues"
+    "url" : "https://github.com/leanderd/npm-file-include/issues"
   },
   "dependencies": {
     "colors": "^1.1.2",
