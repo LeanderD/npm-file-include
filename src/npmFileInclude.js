@@ -4,28 +4,29 @@
 * @Author: Leander Dirkse
 * @Date:   2016-04-16 18:26:49
 * @Last Modified by:   leander
-* @Last Modified time: 2016-04-18 21:11:00
+* @Last Modified time: 2016-04-18 22:01:10
 */
 
 'use strict';
 
-const colors    = require( 'colors' );
-const fs        = require( 'fs' );
-const extfs     = require( 'extfs' );
-const path      = require( 'path' );
-const glob      = require( 'glob' );
-const commander = require( 'commander' );
-const mkdirp    = require('mkdirp');
-const pkg       = require( path.join( __dirname, '../package.json' ) );
-const root      = process.cwd();
+const colors      = require( 'colors' );
+const fs          = require( 'fs' );
+const extfs       = require( 'extfs' );
+const path        = require( 'path' );
+const glob        = require( 'glob' );
+const commander   = require( 'commander' );
+const mkdirp      = require( 'mkdirp' );
+const progressBar = require( 'progress' );
+const pkg         = require( path.join( __dirname, '../package.json' ) );
+const root        = process.cwd();
 
-const argList   = val => val.replace( ',', '' ).split( ' ' );
-const toBoolean = val => ( val === 'true' );
+const argList     = val => val.replace( ',', '' ).split( ' ' );
+const toBoolean   = val => ( val === 'true' );
 
 commander
     .version( pkg.version )
     .option( '-i, --include <include>', 'files to parse', argList, ['**/*.html'] )
-    .option( '-s, --source <source>', 'source directory', argList )
+    .option( '-s, --source <source>', 'source directory', argList, ['src'] )
     .option( '-d, --destination <destination>', 'destination directory', 'build' )
     .option( '-o, --omit-source-parent <omit>', 'omit first directory of the source file', toBoolean, true )
     .option( '-r, --include-recursive <recursive>', 'include with recursion', toBoolean, true )
@@ -40,6 +41,8 @@ let summary = {
     written  : 0
     , errors : 0
 }
+
+let bar = null;
 
 // LD: all output levels
 const logFlags = {
@@ -101,7 +104,7 @@ const findFiles = ( includes, path ) => {
 
     // LD: console output
     log( logType.DEFAULT
-       , colors.underline( 'Found files:' ) + `\n ∙ ${fileList.join( '\n ∙ ' )}`
+       , colors.underline( 'Found files:' ) + `\n ∙ ${fileList.join( '\n ∙ ' )}\n`
        , logFlags.EXTRAVERBOSE
        );
 
@@ -134,6 +137,15 @@ const getMatches = ( data, pattern ) => {
 const checkForPattern = ( files, pattern ) => {
     let hasPattern = [];
 
+    if( outputLevel & logFlags.EXTRAVERBOSE ) {
+        bar = new progressBar('Checking for pattern        [:bar] :percent :etas', {
+            complete     : '='.bold.green
+            , incomplete : ' '
+            , width      : 20
+            , total      : files.length
+        });
+    }
+
     for( let file of files ) {
 
         try {
@@ -146,6 +158,7 @@ const checkForPattern = ( files, pattern ) => {
                 hasPattern.push( { directory: path.dirname( file ), filename: getFilename( file ), matches } );
             }
 
+            if( outputLevel & logFlags.EXTRAVERBOSE ) bar.tick();
         } catch( error ) {
             if( error.code === 'EISDIR' ) {
                 log( logType.ERROR
@@ -183,10 +196,24 @@ const checkForPattern = ( files, pattern ) => {
 }
 
 const removeIncludedFiles = files => {
+    if( outputLevel & logFlags.EXTRAVERBOSE ) {
+        bar = new progressBar('Checking for included files [:bar] :percent :etas', {
+            complete     : '='.bold.green
+            , incomplete : ' '
+            , width      : 20
+            , total      : files.length
+        });
+    }
+
     for( let file of files ) {
+        if( outputLevel & logFlags.EXTRAVERBOSE ) bar.total += file.matches.length;
         for( let match of file.matches ) {
             files = files.filter( file => getFilename( match.filename ) !== file.filename );
+
+            if( outputLevel & logFlags.EXTRAVERBOSE ) bar.tick();
         }
+
+        if( outputLevel & logFlags.EXTRAVERBOSE ) bar.tick();
     }
 
     // LD: console output, check if we should loop through all the files with current outputLevel.
@@ -262,6 +289,14 @@ const doFileInclude = ( file, insertNotFound ) => {
 }
 
 const writeFiles = ( files ) => {
+    if( outputLevel & logFlags.EXTRAVERBOSE ) {
+        bar = new progressBar('Writing files               [:bar] :percent :etas', {
+            complete     : '='.bold.green
+            , incomplete : ' '
+            , width      : 20
+            , total      : files.length
+        });
+    }
 
     for( let file of files ) {
         let contents = doFileInclude( file );
@@ -283,6 +318,7 @@ const writeFiles = ( files ) => {
 
             summary.written++;
 
+            if( outputLevel & logFlags.EXTRAVERBOSE ) bar.tick();
         } catch( error ) {
             log( logType.ERROR
                , `Cannot write file: ${commander.destination}/${path}`
@@ -296,23 +332,8 @@ const writeFiles = ( files ) => {
 
 const init = () => {
 
-    if( !commander.source ) {
-        log( logType.ERROR
-           , 'No source directory given. Please add a source directory using -s or --source'
-           , logFlags.DEFAULT
-           );
-        process.exit(0);
-    }
+    if( outputLevel & ~logFlags.SILENT ) console.time( 'Execution time' );
 
-    if( !commander.include ) {
-        log( logType.ERROR
-           , 'No include files given. Please add include files using -i or --include'
-           , logFlags.DEFAULT
-           );
-        process.exit(0);
-    }
-
-    console.time( 'Execution time' );
     let foundFiles = [], hasPattern = [], filesNotIncluded = [];
 
     foundFiles = findFiles( commander.include, commander.source );
@@ -326,7 +347,7 @@ const init = () => {
        , logFlags.DEFAULT
        );
 
-    console.timeEnd( 'Execution time' );
+    if( outputLevel & ~logFlags.SILENT ) console.timeEnd( 'Execution time' );
 }
 
 init();

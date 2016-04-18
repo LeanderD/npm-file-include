@@ -1,11 +1,10 @@
 {
   "name": "npm-file-include",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Include (HTML) files recursively",
   "engines": {
     "node": "*"
   },
-
   "keywords": [
     "include",
     "html",
@@ -15,26 +14,27 @@
     "scripts"
   ],
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
     "fileinclude": "./src/npmFileInclude.js"
   },
-  "preferGlobal" : true,
+  "preferGlobal": true,
   "author": "Leander Dirkse <leander.dirkse@gmail.com>",
   "license": "MIT",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/leanderd/npm-file-include"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leanderd/npm-file-include"
   },
-  "bugs" : {
-    "url" : "https://github.com/leanderd/npm-file-include/issues"
+  "bugs": {
+    "url": "https://github.com/leanderd/npm-file-include/issues"
   },
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "extfs": "0.0.7",
     "glob": "^7.0.3",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "progress": "^1.1.8"
   }
 }
