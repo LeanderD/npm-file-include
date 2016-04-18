@@ -4,7 +4,7 @@
 * @Author: Leander Dirkse
 * @Date:   2016-04-16 18:26:49
 * @Last Modified by:   leander
-* @Last Modified time: 2016-04-18 21:07:54
+* @Last Modified time: 2016-04-18 21:11:00
 */
 
 'use strict';
@@ -24,7 +24,7 @@ const toBoolean = val => ( val === 'true' );
 
 commander
     .version( pkg.version )
-    .option( '-i, --include <include>', 'files to parse', argList, '**/*.html' )
+    .option( '-i, --include <include>', 'files to parse', argList, ['**/*.html'] )
     .option( '-s, --source <source>', 'source directory', argList )
     .option( '-d, --destination <destination>', 'destination directory', 'build' )
     .option( '-o, --omit-source-parent <omit>', 'omit first directory of the source file', toBoolean, true )
