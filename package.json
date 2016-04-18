@@ -1,6 +1,6 @@
 {
   "name": "npm-file-include",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Include (HTML) files recursively",
   "engines": {
     "node": "*"
