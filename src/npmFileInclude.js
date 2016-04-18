@@ -4,7 +4,7 @@
 * @Author: Leander Dirkse
 * @Date:   2016-04-16 18:26:49
 * @Last Modified by:   leander
-* @Last Modified time: 2016-04-17 21:24:05
+* @Last Modified time: 2016-04-18 21:07:54
 */
 
 'use strict';
@@ -299,6 +299,14 @@ const init = () => {
     if( !commander.source ) {
         log( logType.ERROR
            , 'No source directory given. Please add a source directory using -s or --source'
+           , logFlags.DEFAULT
+           );
+        process.exit(0);
+    }
+
+    if( !commander.include ) {
+        log( logType.ERROR
+           , 'No include files given. Please add include files using -i or --include'
            , logFlags.DEFAULT
            );
         process.exit(0);
